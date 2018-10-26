@@ -7,7 +7,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # The plugin api for IntelliJ 2018.1. This is required to build IJwB,
 # and run integration tests.
-new_http_archive(
+http_archive(
     name = "intellij_ce_2018_1",
     build_file = "@//intellij_platform_sdk:BUILD.idea",
     sha256 = "e9b1d9175e25fbfc98c4dc89d8864cd1b447fc62f8302bd64a5d221d152b4da8",
@@ -16,16 +16,16 @@ new_http_archive(
 
 # The plugin api for IntelliJ 2018.2. This is required to build IJwB,
 # and run integration tests.
-new_http_archive(
+http_archive(
     name = "intellij_ce_2018_2",
     build_file = "@//intellij_platform_sdk:BUILD.idea",
-    sha256 = "4c999b316f9ddd5bc3c6e04966262dbc9fdaefbd1743984a293f93eb6747c265",
-    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/2018.2.3/ideaIC-2018.2.3.zip",
+    sha256 = "0f96916341103b5e6522ff1050cea376f6d4b594c7c8caff0f4c8e3ed636678d",
+    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/2018.2.5/ideaIC-2018.2.5.zip",
 )
 
 # The plugin api for IntelliJ 2018.3. This is required to build IJwB,
 # and run integration tests.
-new_http_archive(
+http_archive(
     name = "intellij_ce_2018_3",
     build_file = "@//intellij_platform_sdk:BUILD.idea",
     sha256 = "e99566194233fdb475ee2dcf7bdd3ee29d70fc12555a63b71d7dab55721282e9",
@@ -34,7 +34,7 @@ new_http_archive(
 
 # The plugin api for IntelliJ UE 2018.1. This is required to run UE-specific
 # integration tests.
-new_http_archive(
+http_archive(
     name = "intellij_ue_2018_1",
     build_file = "@//intellij_platform_sdk:BUILD.ue",
     sha256 = "aef4ef3a96405d67f1f87ccf3de93e1ac7dd38111ee7b3fa3ae1dd22e5e9e750",
@@ -43,7 +43,7 @@ new_http_archive(
 
 # The plugin api for IntelliJ UE 2018.2. This is required to run UE-specific
 # integration tests.
-new_http_archive(
+http_archive(
     name = "intellij_ue_2018_2",
     build_file = "@//intellij_platform_sdk:BUILD.ue",
     sha256 = "be7289a705db20a3486e2d2e586b68e748b2764a49169f02f255928cba3b879f",
@@ -52,7 +52,7 @@ new_http_archive(
 
 # The plugin api for IntelliJ UE 2018.3. This is required to run UE-specific
 # integration tests.
-new_http_archive(
+http_archive(
     name = "intellij_ue_2018_3",
     build_file = "@//intellij_platform_sdk:BUILD.ue",
     sha256 = "a723f0578a36cfa7c5f43af7a76497ffbd83dd276ae96cf908f23c9f2c5203d9",
@@ -61,7 +61,7 @@ new_http_archive(
 
 # The plugin api for CLion 2018.1. This is required to build CLwB,
 # and run integration tests.
-new_http_archive(
+http_archive(
     name = "clion_2018_1",
     build_file = "@//intellij_platform_sdk:BUILD.clion",
     sha256 = "f861409f421728e06280808208a06f79bdda8a437c91e576db0d7ed1e83ac7f5",
@@ -70,16 +70,16 @@ new_http_archive(
 
 # The plugin api for CLion 2018.2. This is required to build CLwB,
 # and run integration tests.
-new_http_archive(
+http_archive(
     name = "clion_2018_2",
     build_file = "@//intellij_platform_sdk:BUILD.clion",
-    sha256 = "ab61071b5798f3c933072d1ad336cbf16e155ced93e9e1d92c61ff8d7fe34301",
-    url = "https://download.jetbrains.com/cpp/CLion-2018.2.3.tar.gz",
+    sha256 = "d284345ae11224c4c29ab8dfcb516cf6e43958a5cf9c902dea110d28fde32b2f",
+    url = "https://download.jetbrains.com/cpp/CLion-2018.2.5.tar.gz",
 )
 
 # The plugin api for Android Studio 3.2. This is required to build ASwB,
 # and run integration tests.
-new_http_archive(
+http_archive(
     name = "android_studio_3_2",
     build_file = "intellij_platform_sdk/BUILD.android_studio",
     sha256 = "b9ec0d44f2feaafe1e3fbd1ed696bf325f9e05cfb6c1ace84dbf87ae249efa84",
@@ -87,7 +87,7 @@ new_http_archive(
 )
 
 # Python plugin for IntelliJ CE 2018.1. Required at compile-time for python-specific features.
-new_http_archive(
+http_archive(
     name = "python_2018_1",
     build_file_content = "\n".join([
         "java_import(",
@@ -101,7 +101,7 @@ new_http_archive(
 )
 
 # Python plugin for IntelliJ CE 2018.2. Required at compile-time for python-specific features.
-new_http_archive(
+http_archive(
     name = "python_2018_2",
     build_file_content = "\n".join([
         "java_import(",
@@ -115,7 +115,7 @@ new_http_archive(
 )
 
 # Python plugin for IntelliJ CE 2018.3. Required at compile-time for python-specific features.
-new_http_archive(
+http_archive(
     name = "python_2018_3",
     build_file_content = "\n".join([
         "java_import(",
@@ -129,7 +129,7 @@ new_http_archive(
 )
 
 # Go plugin for IntelliJ UE. Required at compile-time for Bazel integration.
-new_http_archive(
+http_archive(
     name = "go_2018_1",
     build_file_content = "\n".join([
         "java_import(",
@@ -143,7 +143,7 @@ new_http_archive(
 )
 
 # Go plugin for IntelliJ UE. Required at compile-time for Bazel integration.
-new_http_archive(
+http_archive(
     name = "go_2018_2",
     build_file_content = "\n".join([
         "java_import(",
@@ -157,7 +157,7 @@ new_http_archive(
 )
 
 # Scala plugin for IntelliJ CE 2018.1. Required at compile-time for scala-specific features.
-new_http_archive(
+http_archive(
     name = "scala_2018_1",
     build_file_content = "\n".join([
         "java_import(",
@@ -171,7 +171,7 @@ new_http_archive(
 )
 
 # Scala plugin for IntelliJ CE 2018.2. Required at compile-time for scala-specific features.
-new_http_archive(
+http_archive(
     name = "scala_2018_2",
     build_file_content = "\n".join([
         "java_import(",
@@ -182,6 +182,13 @@ new_http_archive(
     ]),
     sha256 = "fc8faf74c6bf63303ab1b62bade4aae43b1d77ad5bc1d4a578aeae33c23d7b78",
     url = "https://plugins.jetbrains.com/files/1347/48884/scala-intellij-bin-2018.2.10.zip",
+)
+
+new_http_archive(
+    name = "android_studio_3_3",
+    build_file = "intellij_platform_sdk/BUILD.android_studio",
+    sha256 = "fda6f21eba49dc519bd4bdd32c76d5624c1594d697bc99e39eb79aa62b80e12d",
+    url = "https://dl.google.com/dl/android/studio/ide-zips/3.3.0.13/android-studio-ide-182.5073496-linux.zip",
 )
 
 # LICENSE: Common Public License 1.0

@@ -22,7 +22,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import com.android.ide.common.repository.GradleCoordinate;
 import com.android.tools.idea.projectsystem.GoogleMavenArtifactId;
 import com.google.common.collect.Maps;
 import com.google.idea.blaze.android.resources.BlazeLightResourceClassService;
@@ -148,56 +147,6 @@ public class BlazeModuleSystemTest extends BlazeTestCase {
                 .getModuleSystem(module)
                 .getResolvedDependency(GoogleMavenArtifactId.APP_COMPAT_V7.getCoordinate("+")))
         .isNull();
-  }
-
-  @Test
-  public void testGetResolvedDependencyMissingDependency() throws Exception {
-    registerExtensionPoint(MavenArtifactLocator.EP_NAME, MavenArtifactLocator.class)
-        .registerExtension(
-            new MavenArtifactLocator() {
-              @Override
-              public Label labelFor(GradleCoordinate coordinate) {
-                return null;
-              }
-
-              @Override
-              public BuildSystem buildSystem() {
-                return BuildSystem.Blaze;
-              }
-            });
-
-    assertThat(
-            service
-                .getModuleSystem(module)
-                .getResolvedDependency(GoogleMavenArtifactId.APP_COMPAT_V7.getCoordinate("+")))
-        .isNull();
-  }
-
-  @Test
-  public void testGetResolvedDependency() throws Exception {
-    registerExtensionPoint(MavenArtifactLocator.EP_NAME, MavenArtifactLocator.class)
-        .registerExtension(
-            new MavenArtifactLocator() {
-              @Override
-              public Label labelFor(GradleCoordinate coordinate) {
-                // In this test appcompat is mapped to custom label "//foo:bar"
-                return (GoogleMavenArtifactId.forCoordinate(coordinate)
-                        == GoogleMavenArtifactId.APP_COMPAT_V7)
-                    ? Label.create("//foo:bar")
-                    : null;
-              }
-
-              @Override
-              public BuildSystem buildSystem() {
-                return BuildSystem.Blaze;
-              }
-            });
-
-    assertThat(
-            service
-                .getModuleSystem(module)
-                .getResolvedDependency(GoogleMavenArtifactId.APP_COMPAT_V7.getCoordinate("+")))
-        .isNotNull();
   }
 
   private void mockBlazeImportSettings(Container projectServices) {

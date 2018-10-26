@@ -23,6 +23,7 @@ java_library(
            ) + select_for_plugin_api({
         "android-studio-3.2": glob(["studio/integration_3_2/**/*.java"]),
         "android-studio-3.3": glob(["studio/integration_3_3/**/*.java"]),
+        "android-studio-3.4": glob(["studio/integration_3_3/**/*.java"]),
         "default": [],
     }),
     deps = [
