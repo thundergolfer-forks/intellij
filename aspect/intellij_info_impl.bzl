@@ -540,6 +540,7 @@ def build_java_package_manifest(ctx, target, source_files, suffix):
         arguments = ["@" + argfile.path],
         mnemonic = "JavaPackageManifest",
         progress_message = "Parsing java package strings for " + str(target.label),
+        use_default_shell_env = True,
     )
     return output
 
@@ -579,6 +580,7 @@ def build_filtered_gen_jar(ctx, target, java, gen_java_sources, srcjars):
         arguments = args,
         mnemonic = "JarFilter",
         progress_message = "Filtering generated code for " + str(target.label),
+        use_default_shell_env = True,
     )
     output_jar = struct(
         jar = artifact_location(filtered_jar),

@@ -6,6 +6,8 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("@io_bazel_rules_python//python:python.bzl", "py_binary")
+
 py_binary(
     name = "merge_xml",
     srcs = ["merge_xml.py"],
