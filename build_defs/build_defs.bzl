@@ -293,6 +293,7 @@ def _plugin_deploy_zip_impl(ctx):
         outputs = [zip_file],
         mnemonic = "ZipPluginFiles",
         progress_message = "Creating final plugin zip archive",
+        use_default_shell_env = True,
     )
     files = depset([zip_file])
     return struct(

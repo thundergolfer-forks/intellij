@@ -40,6 +40,7 @@ def _impl(ctx):
         arguments = ["@" + argfile.path],
         mnemonic = "IntellijAspectTestFixtureBuilder",
         progress_message = "Building Intellij Aspect Test Fixture",
+        use_default_shell_env = True,
     )
     return struct(
         files = depset([output]),

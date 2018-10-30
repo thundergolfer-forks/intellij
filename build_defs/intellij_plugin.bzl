@@ -106,6 +106,7 @@ def _merge_plugin_xmls(ctx):
         outputs = [merged_file],
         progress_message = "Merging plugin xmls",
         mnemonic = "MergePluginXmls",
+        use_default_shell_env = True,
     )
     return merged_file
 
@@ -135,6 +136,7 @@ def _merge_optional_plugin_xmls(ctx):
             outputs = [merged_file],
             progress_message = "Merging optional xmls",
             mnemonic = "MergeOptionalXmls",
+            use_default_shell_env = True,
         )
         module_to_merged_xmls[module] = merged_file
     return module_to_merged_xmls
@@ -158,6 +160,7 @@ def _add_optional_dependencies_to_plugin_xml(ctx, input_plugin_xml_file, modules
         outputs = [final_plugin_xml_file],
         progress_message = "Adding optional dependencies to final plugin xml",
         mnemonic = "AddModuleDependencies",
+        use_default_shell_env = True,
     )
     return final_plugin_xml_file
 
@@ -183,6 +186,7 @@ def _package_meta_inf_files(ctx, final_plugin_xml_file, module_to_merged_xmls):
         outputs = [jar_file],
         mnemonic = "PackagePluginJar",
         progress_message = "Packaging plugin jar",
+        use_default_shell_env = True,
     )
     return jar_file
 
