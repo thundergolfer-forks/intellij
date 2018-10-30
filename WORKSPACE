@@ -3,6 +3,13 @@ workspace(name = "intellij_with_bazel")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+http_archive(
+    name = "io_bazel_rules_python",
+    sha256 = "3e494a5c3d05ebe1435e613c2bb1fb4e37644c0bb21e7ed08d182c12f6666a07",
+    strip_prefix = "rules_python-9630203fa3306993c3b7cc50db1af4c309ab5d9d",
+    url = "https://github.com/uri-canva/rules_python/archive/9630203fa3306993c3b7cc50db1af4c309ab5d9d.tar.gz",
+)
+
 # Long-lived download links available at: https://www.jetbrains.com/intellij-repository/releases
 
 # The plugin api for IntelliJ 2018.1. This is required to build IJwB,
