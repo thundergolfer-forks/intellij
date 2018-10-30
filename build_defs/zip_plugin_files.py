@@ -1,7 +1,6 @@
 """Packages plugin files into a zip archive."""
 
 import argparse
-from itertools import izip
 import time
 import zipfile
 
@@ -14,7 +13,7 @@ parser.add_argument(
 
 def pairwise(t):
   it = iter(t)
-  return izip(it, it)
+  return zip(it, it)
 
 
 def main():
