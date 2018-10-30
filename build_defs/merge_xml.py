@@ -52,7 +52,7 @@ if __name__ == "__main__":
     AppendFileToTree(filename, dom)
 
   if args.output:
-    with file(args.output, "w") as f:
-      f.write(dom.toxml(encoding="utf-8"))
+    with open(args.output, "w") as f:
+      f.write(dom.toxml())
   else:
-    print dom.toxml()
+    print(dom.toxml())
