@@ -50,6 +50,10 @@ public class JavaLanguageLevelHelper {
             return LanguageLevel.JDK_1_8;
           case "9":
             return LanguageLevel.JDK_1_9;
+          case "10":
+            return LanguageLevel.JDK_10;
+          case "11":
+            return LanguageLevel.JDK_11;
         }
       }
     }
