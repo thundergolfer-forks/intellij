@@ -35,8 +35,9 @@ http_archive(
 http_archive(
     name = "intellij_ce_2018_3",
     build_file = "@//intellij_platform_sdk:BUILD.idea",
-    sha256 = "7dd93fbc5e3d0e6e78583315f7b917580e87e4cca65de085561239c7be4bd01d",
-    url = "https://download-cf.jetbrains.com/idea/ideaIC-183.3975.18.tar.gz",
+    sha256 = "61f8fd01dad55efa8a3bed8202572cc6507ecc9b950bea1faaee2ee4975605fc",
+    url = "https://download-cf.jetbrains.com/idea/ideaIC-183.4284.118.tar.gz",
+    strip_prefix = "idea-IC-183.4284.118",
 )
 
 # The plugin api for IntelliJ UE 2018.1. This is required to run UE-specific
@@ -62,8 +63,9 @@ http_archive(
 http_archive(
     name = "intellij_ue_2018_3",
     build_file = "@//intellij_platform_sdk:BUILD.ue",
-    sha256 = "a0c7dd9e1807646ba42b3e36eb6b8897e94fecb23a4645ace973518022468201",
-    url = "https://download-cf.jetbrains.com/idea/ideaIU-183.3975.18.tar.gz",
+    sha256 = "7b58c30f8f6ed12139f5ce7e0dbba69ea431091f84ec5dbf4472ac22ad04b962",
+    url = "https://download-cf.jetbrains.com/idea/ideaIU-183.4284.118.tar.gz",
+    strip_prefix = "idea-IU-183.4284.118",
 )
 
 # The plugin api for CLion 2018.1. This is required to build CLwB,
@@ -189,6 +191,20 @@ http_archive(
     ]),
     sha256 = "fc8faf74c6bf63303ab1b62bade4aae43b1d77ad5bc1d4a578aeae33c23d7b78",
     url = "https://plugins.jetbrains.com/files/1347/48884/scala-intellij-bin-2018.2.10.zip",
+)
+
+# Scala plugin for IntelliJ CE 2018.3. Required at compile-time for scala-specific features.
+new_http_archive(
+    name = "scala_2018_3",
+    build_file_content = "\n".join([
+        "java_import(",
+        "    name = 'scala',",
+        "    jars = glob(['Scala/lib/*.jar']),",
+        "    visibility = ['//visibility:public'],",
+        ")",
+    ]),
+    sha256 = "8120353e9c2cf94e819a0122067a0d5b7bcc93344cf23177156f1d1134bed786",
+    url = "https://plugins.jetbrains.com/files/1347/51917/scala-intellij-bin-2018.3.3.zip",
 )
 
 http_archive(

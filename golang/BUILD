@@ -21,6 +21,8 @@ java_library(
         "intellij-ue-2018.1": glob(["v181/src/**/*.java"]),
         "intellij-2018.2": glob(["v182/src/**/*.java"]),
         "intellij-ue-2018.2": glob(["v182/src/**/*.java"]),
+        "intellij-2018.3": glob(["v182/src/**/*.java"]),
+        "intellij-ue-2018.3": glob(["v182/src/**/*.java"]),
     }),
     visibility = ["//visibility:public"],
     deps = [
@@ -54,6 +56,8 @@ merged_plugin_xml(
         "intellij-ue-2018.1": ["v181/src/META-INF/go-contents.xml"],
         "intellij-2018.2": ["v182/src/META-INF/go-contents.xml"],
         "intellij-ue-2018.2": ["v182/src/META-INF/go-contents.xml"],
+        "intellij-2018.3": ["v182/src/META-INF/go-contents.xml"],
+        "intellij-ue-2018.3": ["v182/src/META-INF/go-contents.xml"],
     }),
 )
 
@@ -90,6 +94,8 @@ intellij_unit_test_suite(
         "intellij-ue-2018.1": [],
         "intellij-2018.2": glob(["v182/tests/unittests/**/*.java"]),
         "intellij-ue-2018.2": glob(["v182/tests/unittests/**/*.java"]),
+        "intellij-2018.3": glob(["v182/tests/unittests/**/*.java"]),
+        "intellij-ue-2018.3": glob(["v182/tests/unittests/**/*.java"]),
     }),
     test_package_root = "com.google.idea.blaze.golang",
     deps = [
@@ -110,6 +116,8 @@ intellij_integration_test_suite(
         "intellij-ue-2018.1": glob(["v181/tests/integrationtests/**/*.java"]),
         "intellij-2018.2": glob(["v182/tests/integrationtests/**/*.java"]),
         "intellij-ue-2018.2": glob(["v182/tests/integrationtests/**/*.java"]),
+        "intellij-2018.3": glob(["v182/tests/integrationtests/**/*.java"]),
+        "intellij-ue-2018.3": glob(["v182/tests/integrationtests/**/*.java"]),
     }),
     platform_prefix = "",
     required_plugins = "com.google.idea.blaze.golang",

@@ -86,6 +86,8 @@ java_library(
         "intellij-ue-2018.1": glob(["v181/src/**/*.java"]),
         "intellij-2018.2": glob(["v182/src/**/*.java"]),
         "intellij-ue-2018.2": glob(["v182/src/**/*.java"]),
+        "intellij-2018.3": glob(["v182/src/**/*.java"]),
+        "intellij-ue-2018.3": glob(["v182/src/**/*.java"]),
     }),
     exports = [
         "//plugin_dev",

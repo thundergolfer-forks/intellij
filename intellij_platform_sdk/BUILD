@@ -207,8 +207,8 @@ java_library(
 java_library(
     name = "jsr305",
     exports = select_for_ide(
-        clion = ["@jsr305_annotations//jar"],
-        default = [":plugin_api"],
+        default = ["@jsr305_annotations//jar"],
+#        default = [":plugin_api"],
     ),
 )
 
