@@ -18,7 +18,9 @@ package com.google.idea.blaze.base.sync.workspace;
 import com.google.idea.blaze.base.command.info.BlazeInfo;
 import com.google.idea.blaze.base.ideinfo.ArtifactLocation;
 import com.intellij.openapi.util.io.FileUtil;
+
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -39,13 +41,20 @@ public final class ArtifactLocationDecoderImpl implements ArtifactLocationDecode
     if (artifactLocation.isMainWorkspaceSourceArtifact()) {
       return pathResolver.resolveToFile(artifactLocation.getRelativePath());
     }
-    String path =
-        Paths.get(
-                blazeInfo.getExecutionRoot().getPath(),
-                artifactLocation.getExecutionRootRelativePath())
-            .toString();
+    String path;
+    if (artifactLocation.isExternal() && artifactLocation.isSource()) {
+      path = Paths.get(
+          blazeInfo.getOutputBase().getPath(),
+          artifactLocation.getExecutionRootRelativePath())
+          .toString();
+    } else {
+      path = Paths.get(
+              blazeInfo.getExecutionRoot().getPath(),
+              artifactLocation.getExecutionRootRelativePath())
+          .toString();
+    }
     // doesn't require file-system operations -- no attempt to resolve symlinks.
-    return new File(FileUtil.toCanonicalPath(path));
+    return new File(FileUtil.toCanonicalPath(path.toString()));
   }
 
   @Override
