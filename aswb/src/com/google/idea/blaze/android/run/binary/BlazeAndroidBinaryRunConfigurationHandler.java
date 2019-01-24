@@ -259,12 +259,8 @@ public class BlazeAndroidBinaryRunConfigurationHandler
       PropertiesComponent.getInstance(project).setValue(MI_NEVER_ASK_AGAIN, true);
     }
     EventLoggingService.getInstance()
-        .ifPresent(
-            s ->
-                s.logEvent(
-                    getClass(),
-                    "mi_migrate_prompt",
-                    ImmutableMap.of("choice", choiceToString(choice))));
+        .logEvent(
+            getClass(), "mi_migrate_prompt", ImmutableMap.of("choice", choiceToString(choice)));
     return choice == Messages.YES;
   }
 

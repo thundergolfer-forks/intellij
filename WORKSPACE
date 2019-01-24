@@ -5,31 +5,13 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # Long-lived download links available at: https://www.jetbrains.com/intellij-repository/releases
 
-# The plugin api for IntelliJ 2018.2. This is required to build IJwB,
-# and run integration tests.
-http_archive(
-    name = "intellij_ce_2018_2",
-    build_file = "@//intellij_platform_sdk:BUILD.idea",
-    sha256 = "c05166d1766f368a942239efee8f275fa68e3ecc462f0bda1e0635d47bc31e32",
-    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/2018.2.6/ideaIC-2018.2.6.zip",
-)
-
 # The plugin api for IntelliJ 2018.3. This is required to build IJwB,
 # and run integration tests.
 http_archive(
     name = "intellij_ce_2018_3",
     build_file = "@//intellij_platform_sdk:BUILD.idea",
-    sha256 = "76b3f12c5810ec791c49e018ace4f3d350856dc400b8dfdb708ca5c74ddaba2d",
-    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/2018.3.2/ideaIC-2018.3.2.zip",
-)
-
-# The plugin api for IntelliJ UE 2018.2. This is required to run UE-specific
-# integration tests.
-http_archive(
-    name = "intellij_ue_2018_2",
-    build_file = "@//intellij_platform_sdk:BUILD.ue",
-    sha256 = "96a440e11fa617b8ed26322265c2c77edaef94e7838a6e4a51be95c00b69c042",
-    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIU/2018.2.6/ideaIU-2018.2.6.zip",
+    sha256 = "0f08f1e97878e01479c1b934b716a609c3ec375df740a6487f1c0f0d4eeb374d",
+    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/2018.3.3/ideaIC-2018.3.3.zip",
 )
 
 # The plugin api for IntelliJ UE 2018.3. This is required to run UE-specific
@@ -37,8 +19,8 @@ http_archive(
 http_archive(
     name = "intellij_ue_2018_3",
     build_file = "@//intellij_platform_sdk:BUILD.ue",
-    sha256 = "b5be15746578158b0996996e259694ea80e900da77d3d5e6a49c41974b8e19f0",
-    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIU/2018.3.2/ideaIU-2018.3.2.zip",
+    sha256 = "8366b6683a68174f912fa4a9d134ea128411a62a27f38088126ed56d86a130a0",
+    url = "https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIU/2018.3.3/ideaIU-2018.3.3.zip",
 )
 
 # The plugin api for CLion 2018.2. This is required to build CLwB,
@@ -55,34 +37,11 @@ http_archive(
 http_archive(
     name = "clion_2018_3",
     build_file = "@//intellij_platform_sdk:BUILD.clion",
-    sha256 = "b42557e2b09383121a4347fc74c1f903fe08607ef0f3ceb279dd20c519e583e5",
-    url = "https://download.jetbrains.com/cpp/CLion-2018.3.2.tar.gz",
+    sha256 = "74ae5ea933a61299c402c40af4809efe5dabe836050baf6929acc1980ceecedd",
+    url = "https://download.jetbrains.com/cpp/CLion-2018.3.3.tar.gz",
 )
 
-# The plugin api for Android Studio 3.2. This is required to build ASwB,
-# and run integration tests.
-http_archive(
-    name = "android_studio_3_2",
-    build_file = "@//intellij_platform_sdk:BUILD.android_studio",
-    sha256 = "b9ec0d44f2feaafe1e3fbd1ed696bf325f9e05cfb6c1ace84dbf87ae249efa84",
-    url = "https://dl.google.com/android/studio/ide-zips/3.2.1.0/android-studio-ide-181.5056338-linux.zip",
-)
-
-# Python plugin for IntelliJ CE 2018.1. Required at compile-time for python-specific features.
-http_archive(
-    name = "python_2018_1",
-    build_file_content = "\n".join([
-        "java_import(",
-        "    name = 'python',",
-        "    jars = ['python-ce/lib/python-ce.jar'],",
-        "    visibility = ['//visibility:public'],",
-        ")",
-    ]),
-    sha256 = "17f070bb346675e1f743ba6311e6bb426ad61ff693b9bd77fbded357f65234ba",
-    url = "https://plugins.jetbrains.com/files/7322/44945/python-ce-2018.1.181.4445.78.zip",
-)
-
-# Python plugin for IntelliJ CE 2018.2. Required at compile-time for python-specific features.
+# Python plugin for Android Studio 3.3. Required at compile-time for python-specific features.
 http_archive(
     name = "python_2018_2",
     build_file_content = "\n".join([
@@ -112,20 +71,6 @@ http_archive(
 
 # Go plugin for IntelliJ UE. Required at compile-time for Bazel integration.
 http_archive(
-    name = "go_2018_2",
-    build_file_content = "\n".join([
-        "java_import(",
-        "    name = 'go',",
-        "    jars = glob(['intellij-go/lib/*.jar']),",
-        "    visibility = ['//visibility:public'],",
-        ")",
-    ]),
-    sha256 = "7e974ae50372dd81e3fae3f5cb5256fedee158502ab785dd77882807b56d2bda",
-    url = "https://plugins.jetbrains.com/files/9568/48153/intellij-go-182.3684.111.849.zip",
-)
-
-# Go plugin for IntelliJ UE. Required at compile-time for Bazel integration.
-http_archive(
     name = "go_2018_3",
     build_file_content = "\n".join([
         "java_import(",
@@ -136,20 +81,6 @@ http_archive(
     ]),
     sha256 = "3bcab5174d20363cd3f91302b32d0e9d3114533397d70ed03084e5ac8dbe5d66",
     url = "https://plugins.jetbrains.com/files/9568/52280/intellij-go-183.4284.148.1556.zip",
-)
-
-# Scala plugin for IntelliJ CE 2018.2. Required at compile-time for scala-specific features.
-http_archive(
-    name = "scala_2018_2",
-    build_file_content = "\n".join([
-        "java_import(",
-        "    name = 'scala',",
-        "    jars = glob(['Scala/lib/*.jar']),",
-        "    visibility = ['//visibility:public'],",
-        ")",
-    ]),
-    sha256 = "fc8faf74c6bf63303ab1b62bade4aae43b1d77ad5bc1d4a578aeae33c23d7b78",
-    url = "https://plugins.jetbrains.com/files/1347/48884/scala-intellij-bin-2018.2.10.zip",
 )
 
 # Scala plugin for IntelliJ CE 2018.3. Required at compile-time for scala-specific features.
@@ -169,8 +100,8 @@ http_archive(
 http_archive(
     name = "android_studio_3_3",
     build_file = "@//intellij_platform_sdk:BUILD.android_studio",
-    sha256 = "1e62d69c5e9e97c9ff04af5c0edabf9d95126b155ceb8f1a9398b028fb2414e7",
-    url = "https://dl.google.com/android/studio/ide-zips/3.3.0.19/android-studio-ide-182.5183351-linux.zip",
+    sha256 = "5cb29b768a4c316649cccc87334e89b1f2db2dc6625e61aff2d3ae68d5632a37",
+    url = "https://dl.google.com/android/studio/ide-zips/3.3.0.20/android-studio-ide-182.5199772-linux.zip",
 )
 
 # LICENSE: Common Public License 1.0

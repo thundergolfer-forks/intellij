@@ -21,7 +21,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Couple;
 import com.intellij.psi.PsiElement;
 import com.jetbrains.cidr.execution.testing.google.CidrGoogleTestUtil;
-import com.jetbrains.cidr.lang.psi.OCFile;
 import com.jetbrains.cidr.lang.psi.OCMacroCall;
 import com.jetbrains.cidr.lang.symbols.OCSymbol;
 import com.jetbrains.cidr.lang.symbols.cpp.OCStructSymbol;
@@ -70,10 +69,6 @@ public class CidrGoogleTestUtilAdapter {
   @Nullable
   public static Couple<String> extractFullSuiteNameFromMacro(PsiElement element) {
     return CidrGoogleTestUtil.extractFullSuiteNameFromMacro(element);
-  }
-
-  public static boolean fileIncludesGoogleTest(OCFile file) {
-    return CidrGoogleTestUtil.fileIncludesGoogleTest(file);
   }
 
   @Nullable

@@ -15,10 +15,14 @@
  */
 package com.google.idea.blaze.base.run.producers;
 
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
+
+import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.idea.blaze.base.model.primitives.WorkspacePath;
+import com.google.idea.blaze.base.run.ExecutorType;
 import com.google.idea.blaze.base.sync.workspace.WorkspacePathResolver;
 import com.google.idea.blaze.base.sync.workspace.WorkspacePathResolverProvider;
 import com.intellij.execution.Location;
@@ -27,7 +31,6 @@ import com.intellij.execution.actions.ConfigurationContext;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.impl.SimpleDataContext;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -38,6 +41,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.impl.FakePsiElement;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -45,8 +49,8 @@ import javax.annotation.Nullable;
 import org.jetbrains.ide.PooledThreadExecutor;
 
 /**
- * For situations where psi elements can't be efficiently resolved. Uses rough heuristics to
- * recognize test contexts, then does everything else asynchronously.
+ * For situations where psi elements for the current file can't be efficiently resolved. Uses rough
+ * heuristics to recognize test contexts, then does everything else asynchronously.
  */
 class OutsideProjectTestContextProvider implements TestContextProvider {
 
@@ -71,17 +75,18 @@ class OutsideProjectTestContextProvider implements TestContextProvider {
     if (path == null) {
       return null;
     }
-    boolean isTestContext =
+    ImmutableSet<ExecutorType> relevantExecutors =
         Arrays.stream(HeuristicTestIdentifier.EP_NAME.getExtensions())
-            .anyMatch(h -> h.isTestContext(path));
-    if (!isTestContext) {
+            .map(h -> h.supportedExecutors(path))
+            .flatMap(Collection::stream)
+            .collect(toImmutableSet());
+    if (relevantExecutors.isEmpty()) {
       return null;
     }
     ListenableFuture<RunConfigurationContext> future =
         EXECUTOR.submit(() -> findContextAsync(resolveContext(context, vf)));
-    return TestContext.builder()
+    return TestContext.builder(psi, relevantExecutors)
         .setContextFuture(future)
-        .setSourceElement(psi)
         .setDescription(vf.getNameWithoutExtension())
         .build();
   }
@@ -112,7 +117,7 @@ class OutsideProjectTestContextProvider implements TestContextProvider {
     map.put(CommonDataKeys.PROJECT.getName(), context.getProject());
     map.put(LangDataKeys.MODULE.getName(), context.getModule());
     map.put(Location.DATA_KEY.getName(), PsiLocation.fromPsiElement(psi));
-    DataContext dataContext = SimpleDataContext.getSimpleContext(map, null);
+    DataContext dataContext = new SimpleDataContext(map, context.getDataContext());
     return ConfigurationContext.getFromContext(dataContext);
   }
 
@@ -124,5 +129,24 @@ class OutsideProjectTestContextProvider implements TestContextProvider {
       return null;
     }
     return resolver.getWorkspacePath(new File(vf.getPath()));
+  }
+
+  private static class SimpleDataContext implements DataContext {
+    private final Map<String, Object> map;
+    private final DataContext parent;
+
+    SimpleDataContext(Map<String, Object> map, DataContext parent) {
+      this.map = map;
+      this.parent = parent;
+    }
+
+    @Nullable
+    @Override
+    public Object getData(String id) {
+      if (map.containsKey(id)) {
+        return map.get(id);
+      }
+      return parent != null ? parent.getData(id) : null;
+    }
   }
 }

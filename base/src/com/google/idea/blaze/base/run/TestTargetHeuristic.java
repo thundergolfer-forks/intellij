@@ -44,18 +44,32 @@ public interface TestTargetHeuristic {
   ExtensionPointName<TestTargetHeuristic> EP_NAME =
       ExtensionPointName.create("com.google.idea.blaze.TestTargetHeuristic");
 
-  /** Finds a test rule associated with a given {@link PsiElement}. */
-  @Nullable
-  static TargetInfo testTargetForPsiElement(@Nullable PsiElement element) {
-    return testTargetForPsiElement(element, null);
-  }
-
-  /** Finds a test rule associated with a given {@link PsiElement}. */
+  /**
+   * Synchronously finds a test rule associated with a given {@link PsiElement}. This can involve
+   * expensive PSI operations, so shouldn't be called on the EDT.
+   */
   @Nullable
   static TargetInfo testTargetForPsiElement(
       @Nullable PsiElement element, @Nullable TestSize testSize) {
-    ListenableFuture<TargetInfo> future = targetFutureForPsiElement(element, testSize);
-    return future != null && future.isDone() ? FuturesUtil.getIgnoringErrors(future) : null;
+    if (element == null) {
+      return null;
+    }
+    PsiFile psiFile = element.getContainingFile();
+    if (psiFile == null) {
+      return null;
+    }
+    VirtualFile vf = psiFile.getVirtualFile();
+    File file = vf != null ? new File(vf.getPath()) : null;
+    if (file == null) {
+      return null;
+    }
+    Project project = element.getProject();
+    Collection<TargetInfo> targets =
+        SourceToTargetFinder.findTargetsForSourceFile(project, file, Optional.of(RuleType.TEST));
+    return targets == null
+        ? null
+        : TestTargetHeuristic.chooseTestTargetForSourceFile(
+            project, psiFile, file, targets, testSize);
   }
 
   /** Finds a test rule associated with a given {@link PsiElement}. */

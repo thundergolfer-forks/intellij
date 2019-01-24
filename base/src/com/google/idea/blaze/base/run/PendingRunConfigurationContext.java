@@ -15,6 +15,7 @@
  */
 package com.google.idea.blaze.base.run;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -37,9 +38,19 @@ import com.intellij.util.ui.UIUtil;
  */
 public interface PendingRunConfigurationContext extends RunConfigurationContext {
 
+  /** Used to indicate that a pending run configuration couldn't be successfully set up. */
+  class NoRunConfigurationFoundException extends ExecutionException {
+
+    public NoRunConfigurationFoundException(String s) {
+      super(s);
+    }
+  }
+
   ListenableFuture<RunConfigurationContext> getFuture();
 
   String getProgressMessage();
+
+  ImmutableSet<ExecutorType> supportedExecutors();
 
   /**
    * Returns a future with all currently-unknown details of this configuration context resolved.
@@ -104,7 +115,7 @@ public interface PendingRunConfigurationContext extends RunConfigurationContext 
     try {
       RunConfigurationContext result = pendingContext.getFuture().get();
       if (result == null) {
-        throw new ExecutionException("Run configuration setup failed.");
+        throw new NoRunConfigurationFoundException("Run configuration setup failed.");
       }
       return result;
     } catch (InterruptedException e) {

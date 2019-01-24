@@ -256,7 +256,7 @@ public final class BuildPluginBeforeRunTaskProvider
                     if (retVal != 0) {
                       context.setHasError();
                     }
-                    FileCaches.refresh(project);
+                    FileCaches.refresh(project, context);
                     try {
                       deployer.reportBuildComplete(new File(executionRoot), buildResultHelper);
                     } catch (GetArtifactsException e) {

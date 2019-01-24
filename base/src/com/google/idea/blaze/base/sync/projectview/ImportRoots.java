@@ -29,6 +29,7 @@ import com.google.idea.blaze.base.projectview.section.sections.DirectoryEntry;
 import com.google.idea.blaze.base.projectview.section.sections.DirectorySection;
 import com.google.idea.blaze.base.settings.Blaze;
 import com.google.idea.blaze.base.settings.BuildSystem;
+import com.google.idea.blaze.base.sync.data.BlazeDataStorage;
 import com.google.idea.blaze.base.util.WorkspacePathUtil;
 import com.intellij.openapi.project.Project;
 import java.nio.file.FileSystems;
@@ -85,11 +86,9 @@ public final class ImportRoots {
 
     public ImportRoots build() {
       ImmutableCollection<WorkspacePath> rootDirectories = rootDirectoriesBuilder.build();
-      // for bazel projects, if we're including the workspace root,
-      // we force-exclude the bazel artifact directories
-      // (e.g. bazel-bin, bazel-genfiles).
       if (buildSystem == BuildSystem.Bazel && hasWorkspaceRoot(rootDirectories)) {
         excludeBuildSystemArtifacts();
+        excludeProjectDataSubDirectory();
       }
       ImmutableSet<WorkspacePath> minimalExcludes =
           WorkspacePathUtil.calculateMinimalWorkspacePaths(excludeDirectoriesBuilder.build());
@@ -107,6 +106,10 @@ public final class ImportRoots {
               .buildArtifactDirectories(workspaceRoot)) {
         excludeDirectoriesBuilder.add(new WorkspacePath(dir));
       }
+    }
+
+    private void excludeProjectDataSubDirectory() {
+      excludeDirectoriesBuilder.add(new WorkspacePath(BlazeDataStorage.PROJECT_DATA_SUBDIRECTORY));
     }
 
     private static boolean hasWorkspaceRoot(ImmutableCollection<WorkspacePath> rootDirectories) {

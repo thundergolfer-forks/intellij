@@ -28,6 +28,7 @@ import com.google.idea.blaze.base.run.BlazeCommandRunConfiguration;
 import com.google.idea.blaze.base.run.producer.BlazeRunConfigurationProducerTestCase;
 import com.google.idea.blaze.base.run.producers.TestContextRunConfigurationProducer;
 import com.google.idea.blaze.base.sync.data.BlazeProjectDataManager;
+import com.google.idea.blaze.base.sync.projectview.WorkspaceFileFinder;
 import com.intellij.execution.actions.ConfigurationContext;
 import com.intellij.execution.actions.ConfigurationFromContext;
 import com.intellij.openapi.application.ApplicationManager;
@@ -64,13 +65,15 @@ public class MultipleJavaClassesTestConfigurationProducerTest
               final ModifiableRootModel model =
                   ModuleRootManager.getInstance(testFixture.getModule()).getModifiableModel();
               ContentEntry contentEntry = model.getContentEntries()[0];
-              javaSourceRoot = contentEntry.addSourceFolder(pkgRoot, false, "");
+              javaSourceRoot = contentEntry.addSourceFolder(pkgRoot, true, "");
               model.commit();
             });
 
     BlazeProjectDataManager mockProjectDataManager =
         new MockBlazeProjectDataManager(MockBlazeProjectDataBuilder.builder(workspaceRoot).build());
     registerProjectService(BlazeProjectDataManager.class, mockProjectDataManager);
+    registerProjectService(
+        WorkspaceFileFinder.Provider.class, () -> file -> file.getPath().contains("test"));
   }
 
   @After
@@ -87,7 +90,7 @@ public class MultipleJavaClassesTestConfigurationProducerTest
   }
 
   @Test
-  public void testProducedFromDirectory() {
+  public void testProducedFromDirectory() throws Exception {
     MockBlazeProjectDataBuilder builder = MockBlazeProjectDataBuilder.builder(workspaceRoot);
     builder.setTargetMap(
         TargetMapBuilder.builder()
@@ -130,24 +133,25 @@ public class MultipleJavaClassesTestConfigurationProducerTest
   }
 
   @Test
-  public void testProducedFromDirectoryWithNestedTests() {
+  public void testProducedFromDirectoryWithNestedTests() throws Exception {
     MockBlazeProjectDataBuilder builder = MockBlazeProjectDataBuilder.builder(workspaceRoot);
     builder.setTargetMap(
         TargetMapBuilder.builder()
             .addTarget(
                 TargetIdeInfo.builder()
                     .setKind("java_test")
-                    .setLabel("//java/com/google/test:TestClass")
-                    .addSource(sourceRoot("java/com/google/test/TestClass.java"))
+                    .setLabel("//java/com/google/test/sub:TestClass")
+                    .addSource(sourceRoot("java/com/google/test/sub/TestClass.java"))
                     .build())
             .build());
     registerProjectService(
         BlazeProjectDataManager.class, new MockBlazeProjectDataManager(builder.build()));
 
-    PsiDirectory directory = workspace.createPsiDirectory(new WorkspacePath("java/com/google"));
+    PsiDirectory directory =
+        workspace.createPsiDirectory(new WorkspacePath("java/com/google/test"));
     createAndIndexFile(
-        new WorkspacePath("java/com/google/test/TestClass.java"),
-        "package com.google.test;",
+        new WorkspacePath("java/com/google/test/sub/TestClass.java"),
+        "package com.google.test.sub;",
         "@org.junit.runner.RunWith(org.junit.runners.JUnit4.class)",
         "public class TestClass {",
         "  @org.junit.Test",
@@ -165,22 +169,22 @@ public class MultipleJavaClassesTestConfigurationProducerTest
     BlazeCommandRunConfiguration config =
         (BlazeCommandRunConfiguration) fromContext.getConfiguration();
     assertThat(config.getTarget())
-        .isEqualTo(TargetExpression.fromStringSafe("//java/com/google/test:TestClass"));
-    assertThat(getTestFilterContents(config)).isEqualTo("--test_filter=com.google");
-    assertThat(config.getName()).isEqualTo("Blaze test all in directory 'google'");
+        .isEqualTo(TargetExpression.fromStringSafe("//java/com/google/test/sub:TestClass"));
+    assertThat(getTestFilterContents(config)).isEqualTo("--test_filter=com.google.test");
+    assertThat(config.getName()).isEqualTo("Blaze test all in directory 'test'");
     assertThat(getCommandType(config)).isEqualTo(BlazeCommandName.TEST);
   }
 
   @Test
-  public void testNoFilterIfDirectoryAtPackageRoot() {
+  public void testNotProducedForDirectoryNotUnderTestRoots() {
     MockBlazeProjectDataBuilder builder = MockBlazeProjectDataBuilder.builder(workspaceRoot);
     builder.setTargetMap(
         TargetMapBuilder.builder()
             .addTarget(
                 TargetIdeInfo.builder()
                     .setKind("java_test")
-                    .setLabel("//java/com/google/test:TestClass")
-                    .addSource(sourceRoot("java/com/google/test/TestClass.java"))
+                    .setLabel("//java/com/google/other:TestClass")
+                    .addSource(sourceRoot("java/com/google/other/TestClass.java"))
                     .build())
             .build());
     registerProjectService(
@@ -188,8 +192,8 @@ public class MultipleJavaClassesTestConfigurationProducerTest
 
     PsiDirectory directory = workspace.createPsiDirectory(new WorkspacePath("java"));
     createAndIndexFile(
-        new WorkspacePath("java/com/google/test/TestClass.java"),
-        "package com.google.test;",
+        new WorkspacePath("java/com/google/other/TestClass.java"),
+        "package com.google.other;",
         "@org.junit.runner.RunWith(org.junit.runners.JUnit4.class)",
         "public class TestClass {",
         "  @org.junit.Test",
@@ -197,18 +201,8 @@ public class MultipleJavaClassesTestConfigurationProducerTest
         "}");
 
     ConfigurationContext context = createContextFromPsi(directory);
-    List<ConfigurationFromContext> configurations = context.getConfigurationsFromContext();
-    assertThat(configurations).hasSize(1);
-
-    ConfigurationFromContext fromContext = configurations.get(0);
-    assertThat(fromContext.isProducedBy(TestContextRunConfigurationProducer.class)).isTrue();
-    assertThat(fromContext.getConfiguration()).isInstanceOf(BlazeCommandRunConfiguration.class);
-
-    BlazeCommandRunConfiguration config =
-        (BlazeCommandRunConfiguration) fromContext.getConfiguration();
-    assertThat(getTestFilterContents(config)).isNull();
-    assertThat(config.getName()).isEqualTo("Blaze test test:TestClass");
-    assertThat(getCommandType(config)).isEqualTo(BlazeCommandName.TEST);
+    assertThat(new TestContextRunConfigurationProducer().createConfigurationFromContext(context))
+        .isNull();
   }
 
   @Test
@@ -218,16 +212,15 @@ public class MultipleJavaClassesTestConfigurationProducerTest
         TargetMapBuilder.builder()
             .addTarget(
                 TargetIdeInfo.builder()
-                    .setKind("java_test")
-                    .setLabel("//java/com/google/test:TestClass")
-                    .addSource(sourceRoot("java/com/google/test/TestClass.java"))
+                    .setKind("java_binary")
+                    .setLabel("//java/com/google/other:BinaryClass")
+                    .addSource(sourceRoot("java/com/google/other/BinaryClass.java"))
                     .build())
             .build());
     registerProjectService(
         BlazeProjectDataManager.class, new MockBlazeProjectDataManager(builder.build()));
 
-    PsiDirectory directory =
-        workspace.createPsiDirectory(new WorkspacePath("java/com/google/test"));
+    PsiDirectory directory = workspace.createPsiDirectory(new WorkspacePath("java/com/other"));
 
     ConfigurationContext context = createContextFromPsi(directory);
     assertThat(new TestContextRunConfigurationProducer().createConfigurationFromContext(context))

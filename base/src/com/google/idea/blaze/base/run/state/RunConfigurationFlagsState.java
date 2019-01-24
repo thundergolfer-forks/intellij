@@ -141,7 +141,8 @@ public final class RunConfigurationFlagsState implements RunConfigurationState {
     private static String encode(String flag) {
       StringBuilder builder = new StringBuilder();
       builder.append(flag);
-      StringUtil.escapeQuotes(builder);
+      StringUtil.escapeChar(builder, '"');
+      StringUtil.escapeChar(builder, '\'');
       if (builder.length() == 0
           || StringUtil.indexOf(builder, ' ') >= 0
           || StringUtil.indexOf(builder, '|') >= 0) {
@@ -198,7 +199,7 @@ public final class RunConfigurationFlagsState implements RunConfigurationState {
     }
 
     @VisibleForTesting
-    public JComponent getInternalComponent() {
+    JComponent getInternalComponent() {
       return flagsField;
     }
   }

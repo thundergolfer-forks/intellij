@@ -80,10 +80,7 @@ class CMakeWorkspaceOverride {
         ModuleRootManager.getInstance(module), ClassPathStorageUtil.DEFAULT_STORAGE);
     Logger.getInstance(CMakeWorkspaceOverride.class).warn("Had to clear CMake classpath");
     EventLoggingService.getInstance()
-        .ifPresent(
-            s ->
-                s.logEvent(
-                    CMakeWorkspaceOverride.class, "cleared-cmake-classpath", ImmutableMap.of()));
+        .logEvent(CMakeWorkspaceOverride.class, "cleared-cmake-classpath", ImmutableMap.of());
   }
 
   private static void clearContentRootsAndLibrariesIfModifiedForCMake(Module module) {
@@ -111,10 +108,7 @@ class CMakeWorkspaceOverride {
     }
     Logger.getInstance(CMakeWorkspaceOverride.class).warn("Found no content roots of CMake module");
     EventLoggingService.getInstance()
-        .ifPresent(
-            s ->
-                s.logEvent(
-                    CMakeWorkspaceOverride.class, "cmake-lost-content-entries", ImmutableMap.of()));
+        .logEvent(CMakeWorkspaceOverride.class, "cmake-lost-content-entries", ImmutableMap.of());
     NotificationGroup notificationGroup =
         new NotificationGroup("Undo CMake Module", NotificationDisplayType.STICKY_BALLOON, true);
     NotificationListener notificationListener =

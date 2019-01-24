@@ -18,6 +18,7 @@ package com.google.idea.blaze.python.run.producers;
 import com.google.common.base.Joiner;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.idea.blaze.base.dependencies.TargetInfo;
+import com.google.idea.blaze.base.run.ExecutorType;
 import com.google.idea.blaze.base.run.TestTargetHeuristic;
 import com.google.idea.blaze.base.run.producers.RunConfigurationContext;
 import com.google.idea.blaze.base.run.producers.TestContext;
@@ -74,9 +75,8 @@ class PyTestContextProvider implements TestContextProvider {
         filter != null
             ? String.format("%s (%s)", filter, testLocation.testFile.getName())
             : testLocation.testFile.getName();
-    return TestContext.builder()
+    return TestContext.builder(testLocation.sourceElement(), ExecutorType.DEBUG_SUPPORTED_TYPES)
         .setTarget(testTarget)
-        .setSourceElement(testLocation.sourceElement())
         .setTestFilter(filter)
         .setDescription(description)
         .build();

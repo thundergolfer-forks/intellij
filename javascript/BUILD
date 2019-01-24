@@ -17,9 +17,6 @@ java_library(
     name = "javascript",
     srcs = glob(["src/**/*.java"]),
     visibility = ["//visibility:public"],
-    exports = [
-        "//plugin_dev",
-    ],
     deps = [
         "//base",
         "//common/experiments",

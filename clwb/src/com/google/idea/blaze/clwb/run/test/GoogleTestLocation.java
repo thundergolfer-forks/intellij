@@ -15,7 +15,6 @@
  */
 package com.google.idea.blaze.clwb.run.test;
 
-import com.google.idea.blaze.base.command.BlazeFlags;
 import com.google.idea.blaze.base.syncstatus.SyncStatusContributor;
 import com.google.idea.sdkcompat.cidr.OCSymbolAdapter;
 import com.google.idea.sdkcompat.clion.CidrGoogleTestUtilAdapter;
@@ -26,12 +25,15 @@ import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.util.Couple;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.CommonProcessors.CollectProcessor;
 import com.jetbrains.cidr.execution.testing.google.CidrGoogleTestUtil;
 import com.jetbrains.cidr.lang.OCFileTypeHelpers;
+import com.jetbrains.cidr.lang.preprocessor.OCImportGraph;
 import com.jetbrains.cidr.lang.psi.OCCppNamespace;
 import com.jetbrains.cidr.lang.psi.OCFile;
 import com.jetbrains.cidr.lang.psi.OCFunctionDefinition;
@@ -39,11 +41,13 @@ import com.jetbrains.cidr.lang.psi.OCMacroCall;
 import com.jetbrains.cidr.lang.psi.OCMacroCallArgument;
 import com.jetbrains.cidr.lang.psi.OCStruct;
 import com.jetbrains.cidr.lang.psi.visitors.OCVisitor;
+import com.jetbrains.cidr.lang.symbols.OCResolveContext;
 import com.jetbrains.cidr.lang.symbols.OCSymbol;
 import com.jetbrains.cidr.lang.symbols.cpp.OCFunctionSymbol;
 import com.jetbrains.cidr.lang.symbols.cpp.OCStructSymbol;
 import com.jetbrains.cidr.lang.symbols.cpp.OCSymbolWithQualifiedName;
 import com.jetbrains.cidr.lang.symbols.symtable.FileSymbolTablesCache;
+import com.jetbrains.cidr.lang.symbols.symtable.OCGlobalProjectSymbolsCache;
 import com.jetbrains.cidr.lang.ui.OCLongActionUtil;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -52,18 +56,15 @@ import javax.annotation.Nullable;
 public class GoogleTestLocation extends PsiLocation<PsiElement> {
 
   public final GoogleTestSpecification gtest;
-  @Nullable public final String testFilter;
 
   GoogleTestLocation(PsiElement psi, GoogleTestSpecification gtest) {
     super(psi);
     this.gtest = gtest;
-    this.testFilter = gtest.testFilter();
   }
 
-  /** The raw test filter string with '--test_filter=' prepended, or null if there is no filter. */
   @Nullable
-  public String getTestFilterFlag() {
-    return testFilter != null ? BlazeFlags.TEST_FILTER + "=" + testFilter : null;
+  public String getTestFilter() {
+    return gtest.testFilter();
   }
 
   @Nullable
@@ -189,7 +190,7 @@ public class GoogleTestLocation extends PsiLocation<PsiElement> {
                       "progressbar.long.resolve.description",
                       OCLongActionUtil.TIMEOUT_PROPERTY,
                       file.getProject(),
-                      () -> CidrGoogleTestUtilAdapter.fileIncludesGoogleTest(file));
+                      () -> fileIncludesGoogleTest(file));
               return CachedValueProvider.Result.create(
                   doesInclude, PsiModificationTracker.MODIFICATION_COUNT);
             });
@@ -199,6 +200,31 @@ public class GoogleTestLocation extends PsiLocation<PsiElement> {
     // Symbols and the import graph may not be accurate for unsynced files or files outside
     // of source roots. Just do a heuristic search on the AST for minimal support.
     return unsyncedFileContainsGtestMacroCalls(file);
+  }
+
+  private static boolean fileHasSymbol(PsiFile file, @Nullable String namespace, String name) {
+    String qualifiedName = (namespace == null) ? name : namespace + "::" + name;
+    CollectProcessor<OCSymbol> processor =
+        new CollectProcessor<OCSymbol>() {
+          @Override
+          protected boolean accept(OCSymbol symbol) {
+            OCResolveContext context = OCResolveContext.forPsi(file);
+            return symbol.getType().getName(context).equals(qualifiedName);
+          }
+        };
+    Project project = file.getProject();
+    OCGlobalProjectSymbolsCache.processTopLevelAndMemberSymbols(project, processor, name);
+    return processor.getResults().stream()
+        .filter(symbol -> symbol.getContainingFile() != null)
+        .anyMatch(
+            symbol ->
+                OCImportGraph.getAllHeaderRoots(project, symbol.getContainingFile())
+                    .contains(file.getVirtualFile()));
+  }
+
+  private static boolean fileIncludesGoogleTest(PsiFile file) {
+    return fileHasSymbol(file, "testing", "TestCase")
+        || fileHasSymbol(file, "testing", "TestSuite");
   }
 
   private static boolean unsyncedFileContainsGtestMacroCalls(OCFile file) {

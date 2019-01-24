@@ -25,7 +25,7 @@
     <SyncPlugin implementation="com.google.idea.blaze.javascript.BlazeJavascriptSyncPlugin"/>
     <SyncPlugin implementation="com.google.idea.blaze.typescript.BlazeTypescriptSyncPlugin"/>
     <PrefetchFileSource implementation="com.google.idea.blaze.javascript.JavascriptPrefetchFileSource"/>
-    <PrefetchFileSource implementation="com.google.idea.blaze.typescript.TypescriptPrefetchFileSource"/>
+    <PrefetchFileSource implementation="com.google.idea.blaze.typescript.TypeScriptPrefetchFileSource"/>
     <TargetKindProvider implementation="com.google.idea.blaze.javascript.JavascriptBlazeRules"/>
     <TargetKindProvider implementation="com.google.idea.blaze.typescript.TypeScriptBlazeRules"/>
   </extensions>

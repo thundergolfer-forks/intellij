@@ -173,8 +173,7 @@ public final class FastBuildConfigurationRunner implements BlazeCommandRunConfig
       FastBuildIncrementalCompileException e) {
 
     BlazeConsoleService console = BlazeConsoleService.getInstance(project);
-    console.print(
-        "Error performing incremental compilation\n", ConsoleViewContentType.ERROR_OUTPUT);
+    console.print(e.getMessage() + "\n", ConsoleViewContentType.ERROR_OUTPUT);
     console.printHyperlink(
         "Click here to run the tests again with a fresh "
             + Blaze.getBuildSystem(project)
@@ -202,10 +201,7 @@ public final class FastBuildConfigurationRunner implements BlazeCommandRunConfig
       buildService.resetBuild(label);
       ExecutionUtil.restart(env);
       EventLoggingService.getInstance()
-          .ifPresent(
-              service ->
-                  service.logEvent(
-                      FastBuildConfigurationRunner.class, "rerun_tests_with_blaze_link_clicked"));
+          .logEvent(FastBuildConfigurationRunner.class, "rerun_tests_with_blaze_link_clicked");
     }
   }
 }

@@ -110,8 +110,7 @@ public final class FastBuildSuggestion
     if (state.lastDisplayedTimeMs > 0) {
       data.put("msSinceLastDisplay", Long.toString(msSinceLastDisplay));
     }
-    EventLoggingService.getInstance()
-        .ifPresent(service -> service.logEvent(FastBuildSuggestion.class, "notified", data));
+    EventLoggingService.getInstance().logEvent(FastBuildSuggestion.class, "notified", data);
   }
 
   private static boolean isGoodCandidateForFastRun(RunProfile runProfile) {
@@ -183,8 +182,7 @@ public final class FastBuildSuggestion
 
     @Override
     public void hyperlinkUpdate(Notification notification, HyperlinkEvent event) {
-      EventLoggingService.getInstance()
-          .ifPresent(service -> service.logEvent(FastBuildSuggestion.class, "clicked"));
+      EventLoggingService.getInstance().logEvent(FastBuildSuggestion.class, "clicked");
       openLink.hyperlinkUpdate(notification, event);
     }
   }

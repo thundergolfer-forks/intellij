@@ -29,6 +29,7 @@ merged_plugin_xml(
         "//base:plugin_xml",
         "//cpp:plugin_xml",
         "//dart:plugin_xml",
+        "//javascript:plugin_xml",
         "//python:plugin_xml",
         "//skylark:plugin_xml",
     ],
@@ -58,6 +59,7 @@ java_library(
     srcs = glob(["src/**/*.java"]),
     runtime_deps = [
         "//dart",
+        "//javascript",
         "//python",
         "//skylark",
         "//terminal",
@@ -75,6 +77,7 @@ java_library(
 
 OPTIONAL_PLUGIN_XMLS = [
     "//python:optional_xml",
+    "//javascript:optional_xml",
     "//terminal:optional_xml",
 ]
 

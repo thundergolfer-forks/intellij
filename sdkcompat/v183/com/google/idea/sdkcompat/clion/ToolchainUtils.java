@@ -54,10 +54,10 @@ public class ToolchainUtils {
                 return;
               }
 
-              Toolchain newToolchain = createDefaultToolchain();
+              toolchain = createDefaultToolchain();
               toolchain.setDebugger(CPPDebugger.customGdb(debuggerPath));
               cppToolchains.beginUpdate();
-              cppToolchains.addToolchain(newToolchain);
+              cppToolchains.addToolchain(toolchain);
               cppToolchains.endUpdate();
             });
   }

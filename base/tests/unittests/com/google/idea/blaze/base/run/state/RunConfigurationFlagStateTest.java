@@ -30,10 +30,23 @@ import org.junit.runners.JUnit4;
 public class RunConfigurationFlagStateTest {
 
   @Test
-  public void testEscapedQuotesRetainedAfterReserialization() {
+  public void testEscapedDoubleQuotesRetainedAfterReserialization() {
     // previously, we were removing escape chars and quotes during ParametersListUtil.parse, then
     // not putting them back when converting back to a string.
     ImmutableList<String> flags = ImmutableList.of("--flag=\\\"Hello_world!\\\"", "--flag2");
+    RunConfigurationFlagsState state = new RunConfigurationFlagsState("tag", "field");
+    state.setRawFlags(flags);
+
+    RunConfigurationStateEditor editor = state.getEditor(null);
+    editor.resetEditorFrom(state);
+    editor.applyEditorTo(state);
+
+    assertThat(state.getRawFlags()).isEqualTo(flags);
+  }
+
+  @Test
+  public void testEscapedSingleQuotesRetainedAfterReserialization() {
+    ImmutableList<String> flags = ImmutableList.of("--flag=\\\'Hello_world!\\\'", "--flag2");
     RunConfigurationFlagsState state = new RunConfigurationFlagsState("tag", "field");
     state.setRawFlags(flags);
 

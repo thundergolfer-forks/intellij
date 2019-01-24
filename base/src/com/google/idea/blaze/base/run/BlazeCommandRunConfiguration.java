@@ -33,6 +33,7 @@ import com.google.idea.blaze.base.model.primitives.TargetExpression;
 import com.google.idea.blaze.base.model.primitives.WorkspaceRoot;
 import com.google.idea.blaze.base.projectview.ProjectViewManager;
 import com.google.idea.blaze.base.projectview.ProjectViewSet;
+import com.google.idea.blaze.base.run.PendingRunConfigurationContext.NoRunConfigurationFoundException;
 import com.google.idea.blaze.base.run.confighandler.BlazeCommandRunConfigurationHandler;
 import com.google.idea.blaze.base.run.confighandler.BlazeCommandRunConfigurationHandlerProvider;
 import com.google.idea.blaze.base.run.confighandler.BlazeCommandRunConfigurationHandlerProvider.TargetState;
@@ -51,6 +52,7 @@ import com.google.idea.blaze.base.ui.UiUtil;
 import com.google.idea.sdkcompat.run.RunConfigurationBaseCompat;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
+import com.intellij.execution.RunCanceledByUserException;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.LocatableConfigurationBase;
 import com.intellij.execution.configurations.ModuleRunProfile;
@@ -65,7 +67,6 @@ import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.WriteExternalException;
-import com.intellij.psi.PsiElement;
 import com.intellij.ui.TextFieldWithAutoCompletion;
 import com.intellij.ui.TextFieldWithAutoCompletion.StringsCompletionProvider;
 import com.intellij.ui.components.JBCheckBox;
@@ -123,20 +124,6 @@ public class BlazeCommandRunConfiguration extends LocatableConfigurationBase
   /** The blaze-specific parts of the last serialized state of the configuration. */
   private Element blazeElementState = new Element(BLAZE_SETTINGS_TAG);
 
-  /** A not-yet-known target pattern. */
-  public static class PendingTarget {
-    public final ListenableFuture<TargetInfo> future;
-    public final PsiElement context;
-    public final String progressMessage;
-
-    public PendingTarget(
-        ListenableFuture<TargetInfo> future, PsiElement context, String progressMessage) {
-      this.future = future;
-      this.context = context;
-      this.progressMessage = progressMessage;
-    }
-  }
-
   /**
    * Used when we don't yet know all the configuration details, but want to provide a 'run/debug'
    * context action anyway.
@@ -150,7 +137,7 @@ public class BlazeCommandRunConfiguration extends LocatableConfigurationBase
     this.targetKindString = null;
     this.contextElementString = pendingContext.getSourceElement().toString();
     updateHandler();
-    EventLoggingService.getInstance().ifPresent(s -> s.logEvent(getClass(), "async-run-config"));
+    EventLoggingService.getInstance().logEvent(getClass(), "async-run-config");
     pendingContext
         .getFuture()
         .addListener(
@@ -162,11 +149,30 @@ public class BlazeCommandRunConfiguration extends LocatableConfigurationBase
                 if (success) {
                   this.pendingContext = null;
                 }
+              } catch (RunCanceledByUserException | NoRunConfigurationFoundException e) {
+                // silently ignore
               } catch (ExecutionException e) {
-                // ignore silently, will be presented to the user if they try to run this config
+                logger.warn(e);
               }
             },
             MoreExecutors.directExecutor());
+  }
+
+  /**
+   * Returns true if this was previously a pending run configuration, but it turned out to be
+   * invalid. We remove these from the project periodically.
+   */
+  boolean pendingSetupFailed() {
+    PendingRunConfigurationContext pendingContext = this.pendingContext;
+    if (pendingContext == null || !pendingContext.getFuture().isDone()) {
+      return false;
+    }
+    if (targetPattern == null) {
+      return true;
+    }
+    // setup failed, but it still has useful information (perhaps the user modified it?)
+    this.pendingContext = null;
+    return false;
   }
 
   @Nullable

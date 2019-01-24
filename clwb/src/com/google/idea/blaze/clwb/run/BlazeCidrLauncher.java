@@ -97,10 +97,11 @@ public final class BlazeCidrLauncher extends CidrLauncher {
   private static final String DISABLE_BAZEL_GOOGLETEST_FILTER_WARNING =
       "bazel.test_filter.googletest_update";
 
-  static final BoolExperiment useRemoteDebugging = new BoolExperiment("cc.remote.debugging", false);
+  static final BoolExperiment useRemoteDebugging = new BoolExperiment("cc.remote.debugging", true);
 
   private static final ImmutableList<String> extraFlagsForDebugRun =
       ImmutableList.of(
+          "--compilation_mode=dbg",
           "--strip=never",
           "--copt=-g",
           "--dynamic_mode=off",
@@ -109,6 +110,7 @@ public final class BlazeCidrLauncher extends CidrLauncher {
 
   private static final ImmutableList<String> extraFlagsForDebugTest =
       ImmutableList.of(
+          "--compilation_mode=dbg",
           "--strip=never",
           "--copt=-g",
           "--dynamic_mode=off",
@@ -239,7 +241,7 @@ public final class BlazeCidrLauncher extends CidrLauncher {
     if (runner.executableToDebug == null) {
       throw new ExecutionException("No debug binary found.");
     }
-    EventLoggingService.getInstance().ifPresent(s -> s.logEvent(getClass(), "debugging-cpp"));
+    EventLoggingService.getInstance().logEvent(getClass(), "debugging-cpp");
 
     WorkspaceRoot workspaceRoot = WorkspaceRoot.fromProject(project);
     File workspaceRootDirectory = workspaceRoot.directory();

@@ -19,19 +19,15 @@ import com.google.common.collect.Iterables;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Couple;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.CommonProcessors.CollectProcessor;
 import com.intellij.util.CommonProcessors.FindProcessor;
 import com.jetbrains.cidr.execution.testing.CidrTestScopeElement;
 import com.jetbrains.cidr.execution.testing.google.CidrGoogleTestFramework;
 import com.jetbrains.cidr.execution.testing.google.CidrGoogleTestUtilObsolete;
-import com.jetbrains.cidr.lang.preprocessor.OCImportGraph;
 import com.jetbrains.cidr.lang.psi.OCMacroCall;
-import com.jetbrains.cidr.lang.symbols.OCResolveContext;
 import com.jetbrains.cidr.lang.symbols.OCSymbol;
 import com.jetbrains.cidr.lang.symbols.cpp.OCStructSymbol;
-import com.jetbrains.cidr.lang.symbols.symtable.OCGlobalProjectSymbolsCache;
 import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -122,25 +118,6 @@ public class CidrGoogleTestUtilAdapter {
   @Nullable
   public static Couple<String> extractFullSuiteNameFromMacro(PsiElement element) {
     return CidrGoogleTestUtilObsolete.extractFullSuiteNameFromMacro(element);
-  }
-
-  public static boolean fileIncludesGoogleTest(PsiFile file) {
-    CollectProcessor<OCSymbol> processor =
-        new CollectProcessor<OCSymbol>() {
-          @Override
-          protected boolean accept(OCSymbol symbol) {
-            OCResolveContext context = OCResolveContext.forPsi(file);
-            return symbol.getType().getCanonicalName(context).equals("::testing::TestCase");
-          }
-        };
-    Project project = file.getProject();
-    OCGlobalProjectSymbolsCache.processTopLevelAndMemberSymbols(project, processor, "TestCase");
-    return processor.getResults().stream()
-        .filter(symbol -> symbol.getContainingFile() != null)
-        .anyMatch(
-            symbol ->
-                OCImportGraph.getAllHeaderRoots(project, symbol.getContainingFile())
-                    .contains(file.getVirtualFile()));
   }
 
   @Nullable

@@ -52,20 +52,6 @@ config_setting(
 )
 
 config_setting(
-    name = "intellij-2018.2",
-    values = {
-        "define": "ij_product=intellij-2018.2",
-    },
-)
-
-config_setting(
-    name = "intellij-ue-2018.2",
-    values = {
-        "define": "ij_product=intellij-ue-2018.2",
-    },
-)
-
-config_setting(
     name = "android-studio-latest",
     values = {
         "define": "ij_product=android-studio-latest",
@@ -76,6 +62,13 @@ config_setting(
     name = "android-studio-beta",
     values = {
         "define": "ij_product=android-studio-beta",
+    },
+)
+
+config_setting(
+    name = "android-studio-3.5",
+    values = {
+        "define": "ij_product=android-studio-3.5",
     },
 )
 
@@ -97,13 +90,6 @@ config_setting(
     name = "android-studio-3.3",
     values = {
         "define": "ij_product=android-studio-3.3",
-    },
-)
-
-config_setting(
-    name = "android-studio-3.2",
-    values = {
-        "define": "ij_product=android-studio-3.2",
     },
 )
 
