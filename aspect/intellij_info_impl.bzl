@@ -9,6 +9,10 @@ load(
     "struct_omit_none",
     "to_artifact_location",
 )
+load(
+    ":make_variables.bzl",
+    "expand_make_variables",
+)
 
 # Defensive list of features that can appear in the C++ toolchain, but which we
 # definitely don't want to enable (when enabled, they'd contribute command line
@@ -308,6 +312,8 @@ def collect_cpp_info(target, ctx, semantics, ide_info, ide_info_file, output_gro
         target_copts += ctx.rule.attr.copts
     if hasattr(semantics, "cc") and hasattr(semantics.cc, "get_default_copts"):
         target_copts += semantics.cc.get_default_copts(ctx)
+
+    target_copts = [expand_make_variables("copt", copt, ctx) for copt in target_copts]
 
     # Check cc_provider for 'includes' and 'defines' target attribute values.
     cc_provider = target.cc

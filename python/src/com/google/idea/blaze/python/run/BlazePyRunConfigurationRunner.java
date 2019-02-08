@@ -285,11 +285,13 @@ public class BlazePyRunConfigurationRunner implements BlazeCommandRunConfigurati
       throw new WithBrowserHyperlinkExecutionException(validationError);
     }
 
+    SaveUtil.saveAllFiles();
     try (BuildResultHelper buildResultHelper =
         BuildResultHelperProvider.forFiles(project, file -> true)) {
 
       ListenableFuture<BuildResult> buildOperation =
-          BlazeBeforeRunCommandHelper.runBlazeBuild(
+          BlazeBeforeRunCommandHelper.runBlazeCommand(
+              BlazeCommandName.BUILD,
               configuration,
               buildResultHelper,
               BlazePyDebugHelper.getAllBlazeDebugFlags(
@@ -300,7 +302,6 @@ public class BlazePyRunConfigurationRunner implements BlazeCommandRunConfigurati
               "Building debug binary");
 
       try {
-        SaveUtil.saveAllFiles();
         BuildResult result = buildOperation.get();
         if (result.status != BuildResult.Status.SUCCESS) {
           throw new ExecutionException("Blaze failure building debug binary");

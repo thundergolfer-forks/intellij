@@ -78,7 +78,7 @@ class BlazeTypescriptAdditionalLibraryRootsProvider extends AdditionalLibraryRoo
     if (importRoots == null) {
       return ImmutableList.of();
     }
-    Set<String> tsExtensions = TypescriptPrefetchFileSource.getTypescriptExtensions();
+    Set<String> tsExtensions = TypeScriptPrefetchFileSource.getTypeScriptExtensions();
     Predicate<ArtifactLocation> isTs =
         (location) -> {
           String extension = Files.getFileExtension(location.getRelativePath());

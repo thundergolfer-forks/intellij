@@ -32,7 +32,7 @@ def _optstr(name, value):
 
 def stamped_plugin_xml(
         name,
-        plugin_xml,
+        plugin_xml = None,
         plugin_id = None,
         plugin_name = None,
         stamp_since_build = False,
@@ -69,12 +69,15 @@ def stamped_plugin_xml(
 
     args = [
         "./$(location {stamp_tool})",
-        "--plugin_xml=$(location {plugin_xml})",
         "--api_version_txt=$(location {api_version_txt_name})",
         "{stamp_since_build}",
         "{stamp_until_build}",
     ]
-    srcs = [plugin_xml, api_version_txt_name]
+    srcs = [api_version_txt_name]
+
+    if plugin_xml:
+        args.append("--plugin_xml=$(location {plugin_xml})")
+        srcs.append(plugin_xml)
 
     if version and version_file:
         fail("Cannot supply both version and version_file")

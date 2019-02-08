@@ -1214,7 +1214,7 @@ public class SourceDirectoryCalculatorTest extends BlazeTestCase {
       Map<TargetKey, ArtifactLocation> manifests, ArtifactLocationDecoder decoder) {
     return PackageManifestReader.getInstance()
         .readPackageManifestFiles(
-            project, context, decoder, manifests, MoreExecutors.newDirectExecutorService());
+            context, decoder, manifests, MoreExecutors.newDirectExecutorService());
   }
 
   static class MockFileOperationProvider extends FileOperationProvider {
