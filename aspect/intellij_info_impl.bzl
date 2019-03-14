@@ -254,7 +254,7 @@ def _get_python_version(ctx):
 
 def collect_py_info(target, ctx, semantics, ide_info, ide_info_file, output_groups):
     """Updates Python-specific output groups, returns false if not a Python target."""
-    if not PyInfo in target or _is_language_specific_proto_library(ctx, target):
+    if not hasattr(target, "py") or _is_language_specific_proto_library(ctx, target):
         return False
 
     py_semantics = getattr(semantics, "py", None)
@@ -268,7 +268,7 @@ def collect_py_info(target, ctx, semantics, ide_info, ide_info_file, output_grou
         launcher = py_launcher,
         python_version = _get_python_version(ctx),
     )
-    transitive_sources = target[PyInfo].transitive_sources
+    transitive_sources = target.py.transitive_sources
 
     update_set_in_dict(output_groups, "intellij-info-py", depset([ide_info_file]))
     update_set_in_dict(output_groups, "intellij-compile-py", transitive_sources)
