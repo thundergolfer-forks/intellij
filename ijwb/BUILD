@@ -58,7 +58,7 @@ stamped_plugin_xml(
     name = "stamped_plugin_xml",
     changelog_file = "//:changelog",
     plugin_id = "com.google.idea.bazel.ijwb",
-    plugin_name = "Bazel",
+    plugin_name = "Bazel Canva",
     plugin_xml = ":merged_plugin_xml",
     stamp_since_build = True,
     stamp_until_build = True,

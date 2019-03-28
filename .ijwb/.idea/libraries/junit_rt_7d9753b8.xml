@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="junit-rt_7d9753b8">
+    <CLASSES>
+      <root url="jar:///private/var/tmp/_bazel_uri/7bde737889b15abf37c98f26391678a8/external/intellij_ce_2018_3/plugins/junit/lib/junit-rt.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

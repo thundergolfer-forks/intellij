@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.system.id="Blaze" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Python" name="Python">
+      <configuration sdkName="Python 3.6" />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../..">
+      <sourceFolder url="file://$MODULE_DIR$/../../../base/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../base/tests/utils/integration" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../base/tests/utils/unit" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../common/actions/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../common/binaryhelper/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../common/concurrency/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../common/experiments/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../common/experiments/tests/utils/unit" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../common/formatter/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../common/transactions/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../dart/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../golang/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../ijwb/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../java/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../javascript/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../kotlin/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../plugin_dev/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../python/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../python/tests/utils/integration" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../scala/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../sdkcompat/v183" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../skylark/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../terminal/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../testing/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../ijwb/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../ijwb/tests/integrationtests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../python/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../python/tests/integrationtests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../golang/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../golang/tests/integrationtests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../dart/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../plugin_dev/tests/integrationtests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../java/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../kotlin/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../kotlin/tests/integrationtests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../scala/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../scala/tests/integrationtests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../javascript/tests/integrationtests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../base/tests/unittests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../base/tests/integrationtests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../.." />
+      <excludeFolder url="file://$MODULE_DIR$/../../../aswb" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../bazel-bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../bazel-genfiles" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../bazel-intellij" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../bazel-out" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../bazel-testlogs" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../clwb" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../cpp" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="kotlinx-serialization-ide-plugin_25646143" level="project" />
+    <orderEntry type="library" name="bsp-deps_97ac1383" level="project" />
+    <orderEntry type="library" name="resources_en_7d9753b8" level="project" />
+    <orderEntry type="library" name="auto-value-annotations-1.6.2_f6b5cd8a" level="project" />
+    <orderEntry type="library" name="libskylark-gen_72b39370" level="project" />
+    <orderEntry type="library" name="runners_97ac1383" level="project" />
+    <orderEntry type="library" name="sbt-structure-core_2.12-2018.2.1+4-88400d3f_97ac1383" level="project" />
+    <orderEntry type="library" name="libpython_341d98fc" level="project" />
+    <orderEntry type="library" name="libsdkcompat_c9c4845d" level="project" />
+    <orderEntry type="library" name="toml4j-0.7.2_fc282ab1" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_3a183161" level="project" />
+    <orderEntry type="library" name="kotlin-reflect_25646143" level="project" />
+    <orderEntry type="library" name="config-1.2.1_97ac1383" level="project" />
+    <orderEntry type="library" name="kotlinx-coroutines-jdk8-0.26.1-eap13_25646143" level="project" />
+    <orderEntry type="library" name="truth-0.30_a7002327" level="project" />
+    <orderEntry type="library" name="metaconfig-core_2.12-0.4.0_97ac1383" level="project" />
+    <orderEntry type="library" name="libjava-gen_3a183161" level="project" />
+    <orderEntry type="library" name="sam-with-receiver-ide-plugin_25646143" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_2e91b56c" level="project" />
+    <orderEntry type="library" name="commons-lang-2.6_97ac1383" level="project" />
+    <orderEntry type="library" name="libplugin_api_for_tests_ebf9ee57" level="project" />
+    <orderEntry type="library" name="libscala_internal_e0c61d26" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_174acc80" level="project" />
+    <orderEntry type="library" name="kotlin-scripting-jvm-sources_25646143" level="project" />
+    <orderEntry type="library" name="android-lint_25646143" level="project" />
+    <orderEntry type="library" name="markdown-0.1.25_25646143" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_174acc80" level="project" />
+    <orderEntry type="library" name="libcoverage_for_tests_ebf9ee57" level="project" />
+    <orderEntry type="library" name="objenesis-1.3_53fa34f4" level="project" />
+    <orderEntry type="library" name="libgo_for_tests_3d588508" level="project" />
+    <orderEntry type="library" name="terminal_c93f4e1e" level="project" />
+    <orderEntry type="library" name="scalastyle_2.12-1.0.0_97ac1383" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_96d69e7" level="project" />
+    <orderEntry type="library" name="jacocoagent_47789b8a" level="project" />
+    <orderEntry type="library" name="kotlin-allopen-compiler-plugin_25646143" level="project" />
+    <orderEntry type="library" name="metaconfig-typesafe-config_2.12-0.4.0_97ac1383" level="project" />
+    <orderEntry type="library" name="junit-4.12_a67479aa" level="project" />
+    <orderEntry type="library" name="scalariform_2.12-0.2.2_97ac1383" level="project" />
+    <orderEntry type="library" name="template-integration-183.4284.148.1556_fc282ab1" level="project" />
+    <orderEntry type="library" name="scalaUltimate_97ac1383" level="project" />
+    <orderEntry type="library" name="coverage_rt_47789b8a" level="project" />
+    <orderEntry type="library" name="scalafmt-core_2.12-1.5.1_97ac1383" level="project" />
+    <orderEntry type="library" name="python-ce_90f02072" level="project" />
+    <orderEntry type="library" name="jamm-0.3.1_97ac1383" level="project" />
+    <orderEntry type="library" name="libplugin_api_ebf9ee57" level="project" />
+    <orderEntry type="library" name="error_prone_annotations-2.3.0_f94203ce" level="project" />
+    <orderEntry type="library" name="kotlin-compiler-client-embeddable_25646143" level="project" />
+    <orderEntry type="library" name="jpda-jdi_edba0348" level="project" />
+    <orderEntry type="library" name="kotlinx-serialization-compiler-plugin_25646143" level="project" />
+    <orderEntry type="library" name="kotlin-daemon-client_25646143" level="project" />
+    <orderEntry type="library" name="libcoverage_ebf9ee57" level="project" />
+    <orderEntry type="library" name="libjavascript_d32318d" level="project" />
+    <orderEntry type="library" name="libplugin_api_internal_ebf9ee57" level="project" />
+    <orderEntry type="library" name="css-openapi_4e5d113f" level="project" />
+    <orderEntry type="library" name="freemarker_47789b8a" level="project" />
+    <orderEntry type="library" name="kotlinx-coroutines-core-0.26.1-eap13_25646143" level="project" />
+    <orderEntry type="library" name="ivy-2.4.0_97ac1383" level="project" />
+    <orderEntry type="library" name="coverage-report-idea_47789b8a" level="project" />
+    <orderEntry type="library" name="js-test-common_426623f5" level="project" />
+    <orderEntry type="library" name="libcss_internal_d32318d" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_205fe45b" level="project" />
+    <orderEntry type="library" name="mockito-all-1.9.5_6f182096" level="project" />
+    <orderEntry type="library" name="allopen-ide-plugin_25646143" level="project" />
+    <orderEntry type="library" name="scala-library_97ac1383" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_10739e55" level="project" />
+    <orderEntry type="library" name="plan9-183.4284.148.1556_fc282ab1" level="project" />
+    <orderEntry type="library" name="sourcecode_2.12-0.1.3_97ac1383" level="project" />
+    <orderEntry type="library" name="libdevkit_ebf9ee57" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_3a17deeb" level="project" />
+    <orderEntry type="library" name="jacocoant_47789b8a" level="project" />
+    <orderEntry type="library" name="kotlin-scripting-idea_25646143" level="project" />
+    <orderEntry type="library" name="kotlin-scripting-jvm_25646143" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_3a17deeb" level="project" />
+    <orderEntry type="library" name="jps-common-ide_25646143" level="project" />
+    <orderEntry type="library" name="intellij-go-183.4284.148.1556_fc282ab1" level="project" />
+    <orderEntry type="library" name="kotlin-noarg-compiler-plugin_25646143" level="project" />
+    <orderEntry type="library" name="javaslang-2.0.6_25646143" level="project" />
+    <orderEntry type="library" name="libneverlinked_jpda-jdi_3a183161" level="project" />
+    <orderEntry type="library" name="JavaScriptLanguage_426623f5" level="project" />
+    <orderEntry type="library" name="libjunit_ebf9ee57" level="project" />
+    <orderEntry type="library" name="android-extensions-compiler_25646143" level="project" />
+    <orderEntry type="library" name="libgo_3d588508" level="project" />
+    <orderEntry type="library" name="android-output-parser-ide_25646143" level="project" />
+    <orderEntry type="library" name="noarg-ide-plugin_25646143" level="project" />
+    <orderEntry type="library" name="scala-xml_97ac1383" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_96d69e7" level="project" />
+    <orderEntry type="library" name="annotations-13.0_25646143" level="project" />
+    <orderEntry type="library" name="vgo-183.4284.148.1556_fc282ab1" level="project" />
+    <orderEntry type="library" name="j2k_25646143" level="project" />
+    <orderEntry type="library" name="kotlin-scripting-common_25646143" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_3a1576be" level="project" />
+    <orderEntry type="library" name="kotlin-sam-with-receiver-compiler-plugin_25646143" level="project" />
+    <orderEntry type="library" name="junit-rt_7d9753b8" level="project" />
+    <orderEntry type="library" name="jvm-ide_25646143" level="project" />
+    <orderEntry type="library" name="javax.inject-1_25646143" level="project" />
+    <orderEntry type="library" name="coverage_47789b8a" level="project" />
+    <orderEntry type="library" name="libterminal_ebf9ee57" level="project" />
+    <orderEntry type="library" name="idea-junit_7d9753b8" level="project" />
+    <orderEntry type="library" name="javaslang-match-2.0.6_25646143" level="project" />
+    <orderEntry type="library" name="libscala_e0c61d26" level="project" />
+    <orderEntry type="library" name="scala-nailgun-runner_97ac1383" level="project" />
+    <orderEntry type="library" name="resources_en_426623f5" level="project" />
+    <orderEntry type="library" name="android-extensions-ide_25646143" level="project" />
+    <orderEntry type="library" name="kotlin-script-runtime_25646143" level="project" />
+    <orderEntry type="library" name="libjsr305_ebf9ee57" level="project" />
+    <orderEntry type="library" name="semver4j-2.2.0_426623f5" level="project" />
+    <orderEntry type="library" name="evo-inflector-1.2_97ac1383" level="project" />
+    <orderEntry type="library" name="go-utils-183.4284.148.1556_fc282ab1" level="project" />
+    <orderEntry type="library" name="kotlin-scripting-compiler_25646143" level="project" />
+    <orderEntry type="library" name="kotlin-stdlib_25646143" level="project" />
+    <orderEntry type="library" name="kotlin-plugin_25646143" level="project" />
+    <orderEntry type="library" name="android-ide_25646143" level="project" />
+    <orderEntry type="library" name="fastparse_2.12-0.4.3_97ac1383" level="project" />
+    <orderEntry type="library" name="scalameta_97ac1383" level="project" />
+    <orderEntry type="library" name="devkit_d114c2c3" level="project" />
+    <orderEntry type="library" name="scala-parser-combinators_2.12-1.0.6_97ac1383" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_c412d08" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_3a148e10" level="project" />
+    <orderEntry type="library" name="libgo_internal_3d588508" level="project" />
+    <orderEntry type="library" name="bcel-6.0_97ac1383" level="project" />
+    <orderEntry type="library" name="libkotlin_for_tests_ebf9ee57" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_205fe45b" level="project" />
+    <orderEntry type="library" name="scala-play-2-jps-plugin_97ac1383" level="project" />
+    <orderEntry type="library" name="libpython_internal_341d98fc" level="project" />
+    <orderEntry type="library" name="kotlin-script-util_25646143" level="project" />
+    <orderEntry type="library" name="compiler-shared_97ac1383" level="project" />
+    <orderEntry type="library" name="kapt3-idea_25646143" level="project" />
+    <orderEntry type="library" name="css_4e5d113f" level="project" />
+    <orderEntry type="library" name="libscala_for_tests_e0c61d26" level="project" />
+    <orderEntry type="library" name="scalatest-finders-patched-0.9.9_97ac1383" level="project" />
+    <orderEntry type="library" name="libkotlin_ebf9ee57" level="project" />
+    <orderEntry type="library" name="kotlin-scripting-common-sources_25646143" level="project" />
+    <orderEntry type="library" name="kotlin-gradle-tooling_25646143" level="project" />
+    <orderEntry type="library" name="util-interface-1.1.2_97ac1383" level="project" />
+    <orderEntry type="library" name="scalap_97ac1383" level="project" />
+    <orderEntry type="library" name="maven-ide_25646143" level="project" />
+    <orderEntry type="library" name="libjavascript_for_tests_d32318d" level="project" />
+    <orderEntry type="library" name="scala-reflect_97ac1383" level="project" />
+    <orderEntry type="library" name="libbase-gen_3a148e10" level="project" />
+    <orderEntry type="library" name="integration_tests-filtered-gen_10739e55" level="project" />
+    <orderEntry type="library" name="libauto_value_ffadeb01" level="project" />
+    <orderEntry type="library" name="idea-git_25646143" level="project" />
+    <orderEntry type="library" name="libpython_for_tests_341d98fc" level="project" />
+    <orderEntry type="library" name="javascript-openapi_426623f5" level="project" />
+    <orderEntry type="library" name="libjavascript_internal_d32318d" level="project" />
+    <orderEntry type="library" name="resources_en_4e5d113f" level="project" />
+    <orderEntry type="library" name="proto_deps_65fc9e8" level="project" />
+    <orderEntry type="library" name="TestRunner_deploy_520a8188" level="project" />
+    <orderEntry type="library" name="libtruth_ebf9ee57" level="project" />
+    <orderEntry type="library" name="junit5-rt_7d9753b8" level="project" />
+    <orderEntry type="library" name="libtest_libs_ebf9ee57" level="project" />
+    <orderEntry type="library" name="unit_tests-filtered-gen_3a148e10" level="project" />
+    <orderEntry type="library" name="coverage-report_47789b8a" level="project" />
+    <orderEntry type="library" name="kotlin-stdlib-common_25646143" level="project" />
+    <orderEntry type="library" name="Python 3.6 interpreter library" level="application" />
+  </component>
+</module>

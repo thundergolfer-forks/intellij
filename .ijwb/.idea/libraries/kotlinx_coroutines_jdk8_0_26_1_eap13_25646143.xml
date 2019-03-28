@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="kotlinx-coroutines-jdk8-0.26.1-eap13_25646143">
+    <CLASSES>
+      <root url="jar:///private/var/tmp/_bazel_uri/7bde737889b15abf37c98f26391678a8/external/intellij_ce_2018_3/plugins/Kotlin/lib/kotlinx-coroutines-jdk8-0.26.1-eap13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

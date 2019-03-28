@@ -76,16 +76,9 @@ _flag_hack_rule = rule(
 )
 
 def define_flag_hack():
-    native.config_setting(
-        name = "incompatible_py2_outputs_are_suffixed_setting",
-        values = {"incompatible_py2_outputs_are_suffixed": "true"},
-    )
     _flag_hack_rule(
         name = "flag_hack",
-        incompatible_py2_outputs_are_suffixed = select({
-            ":incompatible_py2_outputs_are_suffixed_setting": True,
-            "//conditions:default": False,
-        }),
+        incompatible_py2_outputs_are_suffixed = False,
         visibility = ["//visibility:public"],
     )
 
@@ -905,7 +898,7 @@ def make_intellij_info_aspect(aspect_impl, semantics):
                 allow_files = True,
             ),
             "_flag_hack": attr.label(
-                default = "//aspect:flag_hack",
+                default = "//:flag_hack",
             ),
         },
         attr_aspects = attr_aspects,

@@ -63,7 +63,6 @@ java_library(
         "//java/com/google/devtools/intellij/blaze/plugin/aswb:__pkg__",
         "//java/com/google/devtools/intellij/blaze/plugin/ijwb:__pkg__",
     ],
-    deps = [":jdk_tools_jar"],
 )
 
 # This is provided by the IDE at runtime
@@ -178,16 +177,16 @@ java_binary(
     runtime_deps = ["//intellij_platform_sdk:guava"],
 )
 
-java_binary(
-    name = "jdk_tools_lib",
-    main_class = "None",
-    runtime_deps = [":jdk_tools_jar"],
-)
+# java_binary(
+#     name = "jdk_tools_lib",
+#     main_class = "None",
+#     runtime_deps = [":jdk_tools_jar"],
+# )
 
-java_import(
-    name = "jdk_tools_jar",
-    jars = ["@local_jdk//:langtools"],
-)
+# java_import(
+#     name = "jdk_tools_jar",
+#     jars = ["@local_jdk//:langtools"],
+# )
 
 java_binary(
     name = "truth_lib",
@@ -196,23 +195,23 @@ java_binary(
     runtime_deps = ["//intellij_platform_sdk:truth"],
 )
 
-intellij_integration_test_suite(
-    name = "integration_tests",
-    srcs = glob(["tests/integrationtests/**/*.java"]),
-    required_plugins = "com.google.idea.blaze.java",
-    test_package_root = "com.google.idea.blaze.java",
-    runtime_deps = [
-        ":java_integration_test_plugin",
-    ],
-    deps = [
-        ":java",
-        "//base",
-        "//base:integration_test_utils",
-        "//base:unit_test_utils",
-        "//intellij_platform_sdk:jsr305",
-        "//intellij_platform_sdk:plugin_api_for_tests",
-        "//intellij_platform_sdk:test_libs",
-        "//proto:proto_deps",
-        "@junit//jar",
-    ],
-)
+# intellij_integration_test_suite(
+#     name = "integration_tests",
+#     srcs = glob(["tests/integrationtests/**/*.java"]),
+#     required_plugins = "com.google.idea.blaze.java",
+#     test_package_root = "com.google.idea.blaze.java",
+#     runtime_deps = [
+#         ":java_integration_test_plugin",
+#     ],
+#     deps = [
+#         ":java",
+#         "//base",
+#         "//base:integration_test_utils",
+#         "//base:unit_test_utils",
+#         "//intellij_platform_sdk:jsr305",
+#         "//intellij_platform_sdk:plugin_api_for_tests",
+#         "//intellij_platform_sdk:test_libs",
+#         "//proto:proto_deps",
+#         "@junit//jar",
+#     ],
+# )
